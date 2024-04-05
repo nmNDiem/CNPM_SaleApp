@@ -10,13 +10,23 @@ def index():
     cate_id = request.args.get('category_id')
 
     products = dao.load_products(q, cate_id)
+
     return render_template('index.html', products=products)
 
 
 @app.route('/products/<int:id>')
 def details(id):
     product = dao.get_product_by_id(product_id=id)
+
     return render_template('product-details.html', product=product)
+
+
+@app.route('/login', methods=['get', 'post'])
+def login_my_user():
+    if request.method.__eq__('POST'):
+        print(request.form)
+
+    return render_template('login.html')
 
 
 @app.context_processor
