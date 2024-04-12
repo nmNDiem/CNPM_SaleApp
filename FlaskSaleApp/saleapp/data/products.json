@@ -26,36 +26,36 @@
   "id": 5,
   "name": "Apple Macbook Air M2 ",
   "price": 25000000,
-  "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/macbook_air_m22.png",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg",
   "category_id": 3
 },{
   "id": 6,
   "name": "Laptop Asus VivoBook",
   "price": 12000000,
-  "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_-_2023-06-08t005130.908.png",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg",
   "category_id": 3
 },{
   "id": 7,
   "name": "iPad Air 5 ",
   "price": 14000000,
-  "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-air-5.png",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg",
   "category_id": 2
 },{
   "id": 8,
   "name": "Samsung Galaxy Tab S9",
   "price": 17000000,
-  "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-s9-wifi-12gb-256gb_1.png",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg",
   "category_id": 2
 },{
   "id": 9,
   "name": "Xiaomi Pad 6",
   "price": 9000000,
-  "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi-mi-pad-6-8gb-128gb_4__1.jpg",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg",
   "category_id": 2
 },{
   "id": 10,
   "name": "OPPO Reno11 F 5G",
   "price": 9000000,
-  "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/o/p/oppo-reno-11-f-xanh-2.png",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg",
   "category_id": 1
 }]

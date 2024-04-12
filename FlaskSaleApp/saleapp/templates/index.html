@@ -3,6 +3,14 @@
 {% block title %}Trang chủ{% endblock %}
 
 {% block content %}
+<ul class="pagination">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="/?page=1">1</a></li>
+  <li class="page-item"><a class="page-link" href="/?page=2">2</a></li>
+  <li class="page-item"><a class="page-link" href="/?page=3">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+
 <div class="row">
     {% for p in products %}
     <div class="col-md-3 col-12" style="padding: 0.7rem">

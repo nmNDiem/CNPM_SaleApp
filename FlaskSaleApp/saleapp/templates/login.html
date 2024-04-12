@@ -7,12 +7,14 @@
 
 <form method="post" action="/login">
     <div class="form-floating mb-3 mt-3">
-        <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+        <input type="text" class="form-control" id="username" name="username"
+               pattern="[a-zA-Z0-9]*" required placeholder="Username">
         <label for="username">Tên đăng nhập</label>
     </div>
 
     <div class="form-floating mt-3 mb-3">
-        <input type="password" class="form-control" id="password" placeholder="Mật khẩu" name="password">
+        <input type="password" class="form-control" id="password" name="password"
+               required placeholder="Mật khẩu">
         <label for="password">Mật khẩu</label>
     </div>
 
