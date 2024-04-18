@@ -6,7 +6,7 @@ from saleapp import db, app
 class Category(db.Model):
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String(50), unique=True, nullable=False)
-    products = relationship('Product', backref='category')
+    products = relationship('Product', backref='category', lazy=True)
 
     def __str__(self):
         return self.name

@@ -8,6 +8,10 @@ def load_categories():
     #     return json.load(f)
 
 
+def count_products():
+    return Product.query.count()
+
+
 def load_products(q=None, cate_id=None, page=None):
     query = Product.query
 

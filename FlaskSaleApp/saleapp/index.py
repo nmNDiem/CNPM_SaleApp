@@ -1,6 +1,8 @@
+import math
+
 from flask import render_template, request, redirect
 import dao
-from saleapp import app
+from saleapp import app, admin
 
 
 @app.route('/')
@@ -10,8 +12,9 @@ def index():
     page = request.args.get('page')
 
     products = dao.load_products(q=q, cate_id=cate_id, page=page)
+    pages = math.ceil(dao.count_products() / app.config['PAGE_SIZE'])
 
-    return render_template('index.html', products=products)
+    return render_template('index.html', products=products, pages=pages)
 
 
 @app.route('/products/<int:id>')
