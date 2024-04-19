@@ -1,8 +1,8 @@
 import math
-
 from flask import render_template, request, redirect
 import dao
-from saleapp import app, admin
+from saleapp import app, admin, login
+from flask_login import login_user
 
 
 @app.route('/')
@@ -36,11 +36,28 @@ def login_my_user():
     return render_template('login.html')
 
 
+@app.route('/admin-login', methods=['post'])
+def process_admin_login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    u = dao.auth_user(username=username, password=password)
+
+    if u:
+        login_user(user=u)
+
+    return redirect('/admin')
+
+
 @app.context_processor
 def common_attributes():
     return {
         'categories': dao.load_categories()
     }
+
+
+@login.user_loader
+def load_user(user_id):
+    return dao.get_user_by_id(user_id)
 
 
 if __name__ == '__main__':
