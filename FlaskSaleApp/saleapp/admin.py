@@ -1,12 +1,18 @@
+from flask import redirect
 from flask_admin import Admin, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import BaseView
+from flask_login import logout_user, current_user
+
 from saleapp import app, db
 from saleapp.models import Category, Product
 
 
 class MyCategoryView(ModelView):
     column_list = ['id', 'name', 'products']
+
+    def is_accessible(self):
+        return current_user.is_authenticated
 
 
 class MyProductView(ModelView):
@@ -21,15 +27,31 @@ class MyProductView(ModelView):
     column_filters = ['id', 'name', 'price', 'category_id']
     can_export = True
 
+    def is_accessible(self):
+        return current_user.is_authenticated
+
 
 class StatsView(BaseView):
     @expose('/')
     def index(self):
         return self.render('admin/stats.html')
 
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+
+class LogoutView(BaseView):
+    @expose('/')
+    def index(self):
+        logout_user()
+        return redirect('/admin')
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
 
 admin = Admin(app, name='E-commerce Website', template_mode='bootstrap4')
 admin.add_view(MyCategoryView(Category, db.session))
 admin.add_view(MyProductView(Product, db.session))
 admin.add_view(StatsView(name='Thống kê'))
-
+admin.add_view(LogoutView(name="Đăng xuất"))
