@@ -5,17 +5,20 @@ from flask_admin import BaseView
 from flask_login import logout_user, current_user
 
 from saleapp import app, db
-from saleapp.models import Category, Product
+from saleapp.models import Category, Product, UserRole, User
 
 
-class MyCategoryView(ModelView):
-    column_list = ['id', 'name', 'products']
-
+class AuthenticatedView(ModelView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        return current_user.is_authenticated and current_user.user_role == UserRole.ADMIN
 
 
-class MyProductView(ModelView):
+class MyCategoryView(AuthenticatedView):
+    column_list = ['id', 'name', 'products']
+    column_editable_list = ['name']
+
+
+class MyProductView(AuthenticatedView):
     column_list = ['id', 'name', 'price', 'category_id']
     column_labels = {
         'id': 'Mã sản phẩm',
@@ -23,12 +26,10 @@ class MyProductView(ModelView):
         'price': 'Giá',
         'category_id': 'Loại sản phẩm'
     }
+    column_editable_list = ['name', 'price']
     column_searchable_list = ['id', 'name']
     column_filters = ['id', 'name', 'price', 'category_id']
     can_export = True
-
-    def is_accessible(self):
-        return current_user.is_authenticated
 
 
 class StatsView(BaseView):

@@ -1,8 +1,11 @@
 import math
+import re
+
+import cloudinary.uploader
 from flask import render_template, request, redirect
 import dao
 from saleapp import app, admin, login
-from flask_login import login_user
+from flask_login import login_user, current_user, logout_user
 
 
 @app.route('/')
@@ -26,14 +29,54 @@ def details(id):
 
 @app.route('/login', methods=['get', 'post'])
 def login_my_user():
+    if current_user.is_authenticated:
+        return redirect('/')
+
+    err_message = None
     if request.method.__eq__('POST'):
         username = request.form.get('username')
         password = request.form.get('password')
+        user = dao.auth_user(username=username, password=password)
 
-        if username.__eq__('admin') and password.__eq__('123'):
+        if user:
+            login_user(user)
             return redirect('/')
+        else:
+            err_message = 'Tên đăng nhập hoặc mật khẩu không đúng!'
 
-    return render_template('login.html')
+    return render_template('login.html', err_message=err_message)
+
+
+@app.route('/register', methods=['get', 'post'])
+def register_user():
+    err_message = None
+    if request.method.__eq__('POST'):
+        password = request.form.get('password')
+        confirm = request.form.get('confirm')
+
+        if password.__eq__(confirm):
+            avatar = request.files.get('avatar')
+            avatar_path = None
+            if avatar:
+                res = cloudinary.uploader.upload(avatar)
+                avatar_path = res['secure_url']
+
+            dao.add_user(name=request.form.get('name'),
+                         avatar=avatar_path,
+                         username=request.form.get('username'),
+                         password=password)
+
+            return redirect('/login')
+        else:
+            err_message = 'Mật khẩu không khớp!'
+
+    return render_template('register.html', err_message=err_message)
+
+
+@app.route('/logout', methods=['get'])
+def logout_my_user():
+    logout_user()
+    return redirect('/')
 
 
 @app.route('/admin-login', methods=['post'])

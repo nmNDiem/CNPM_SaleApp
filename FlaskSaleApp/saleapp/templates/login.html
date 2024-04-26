@@ -5,6 +5,10 @@
 {% block content %}
 <h1 class="text-center mt-2">ĐĂNG NHẬP</h1>
 
+{% if err_message %}
+<div class="alert alert-danger">{{ err_message }}</div>
+{% endif %}
+
 <form method="post" action="/login">
     <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" id="username" name="username"

@@ -1,5 +1,5 @@
 from saleapp.models import Category, Product, User
-from saleapp import app
+from saleapp import app, db
 import hashlib
 
 
@@ -60,6 +60,14 @@ def auth_user(username, password):
 
     return User.query.filter(User.username.__eq__(username.strip()),
                              User.password.__eq__(password)).first()
+
+
+def add_user(name, avatar, username, password):
+    password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
+    user = User(name=name, avatar=avatar, username=username, password=password)
+
+    db.session.add(user)
+    db.session.commit()
 
 
 if __name__ == '__main__':
