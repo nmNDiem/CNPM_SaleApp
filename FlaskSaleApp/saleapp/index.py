@@ -1,11 +1,11 @@
 import math
-import re
-
 import cloudinary.uploader
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, jsonify
 import dao
+import utils
 from saleapp import app, admin, login
 from flask_login import login_user, current_user, logout_user
+from decorators import loggedin
 
 
 @app.route('/')
@@ -28,10 +28,8 @@ def details(id):
 
 
 @app.route('/login', methods=['get', 'post'])
+@loggedin
 def login_my_user():
-    if current_user.is_authenticated:
-        return redirect('/')
-
     err_message = None
     if request.method.__eq__('POST'):
         username = request.form.get('username')
@@ -48,6 +46,7 @@ def login_my_user():
 
 
 @app.route('/register', methods=['get', 'post'])
+@loggedin
 def register_user():
     err_message = None
     if request.method.__eq__('POST'):
@@ -89,6 +88,29 @@ def process_admin_login():
         login_user(user=u)
 
     return redirect('/admin')
+
+
+@app.route('/api/carts', methods=['post'])
+def add_to_cart():
+    cart = session.get('cart')
+
+    if not cart:
+        cart = {}
+
+    id = str(request.json.get("id"))
+    if id in cart:
+        cart[id]["quantity"] += 1
+    else:
+        cart[id] = {
+            "id": id,
+            "name": request.json.get("name"),
+            "price": request.json.get("price"),
+            "quantity": 1
+        }
+
+    session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
 
 
 @app.context_processor
