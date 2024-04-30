@@ -17,6 +17,10 @@
                     <a class="nav-link" href="/?category_id={{ c.id }}">{{c.name}}</a>
                 </li>
                 {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-link text-info" href="/cart">&#128722
+                    <span class="badge bg-danger cart-counter">{{ cart_stats.total_quantity }}</span></a>
+                </li>
 
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
@@ -34,10 +38,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-info" href="/register">&#128075 Đăng ký</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="/register">&#128722
-                    <span class="badge bg-danger cart-counter">0</span></a>
                 </li>
                 {% endif %}
             </ul>

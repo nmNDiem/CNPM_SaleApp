@@ -38,7 +38,8 @@ def login_my_user():
 
         if user:
             login_user(user)
-            return redirect('/')
+            next = request.args.get('next')
+            return redirect(next if next else '/')
         else:
             err_message = 'Tên đăng nhập hoặc mật khẩu không đúng!'
 
@@ -90,6 +91,11 @@ def process_admin_login():
     return redirect('/admin')
 
 
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+
+
 @app.route('/api/carts', methods=['post'])
 def add_to_cart():
     cart = session.get('cart')
@@ -113,10 +119,33 @@ def add_to_cart():
     return jsonify(utils.count_cart(cart))
 
 
+@app.route('/api/cart/<product_id>', methods=['put'])
+def update_cart(product_id):
+    cart = session.get('cart')
+
+    if cart and product_id in cart:
+        cart[product_id]['quantity'] = request.json['quantity']
+        session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
+
+@app.route('/api/cart/<product_id>', methods=['delete'])
+def delete_cart(product_id):
+    cart = session.get('cart')
+
+    if cart and product_id in cart:
+        del cart[product_id]
+        session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
+
 @app.context_processor
 def common_attributes():
     return {
-        'categories': dao.load_categories()
+        'categories': dao.load_categories(),
+        'cart_stats': utils.count_cart(session.get('cart'))
     }
 
 
